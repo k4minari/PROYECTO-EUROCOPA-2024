@@ -1,3 +1,4 @@
+
 class Partido:
     def __init__(self, equipo_local, equipo_visitante, fecha, estadio):
         self.equipo_local = equipo_local
@@ -7,8 +8,11 @@ class Partido:
         
     def show(self):
         print(f'''
-Equipo local: {self.equipo_local}
-Equipo visitante: {self.equipo_visitante}
-Fecha del encuentro: {self.fecha}
+   Equipo local:                  Equipo visitante:
+{self.equipo_local}     VS     {self.equipo_visitante}
+
+               Fecha del encuentro
+                   {self.fecha}
+
 Lugar: {self.estadio}
 ''')

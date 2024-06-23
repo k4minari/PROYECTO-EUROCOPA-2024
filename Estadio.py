@@ -8,10 +8,11 @@ class Estadio:
         
     def show(self):
         print(f'''
-ID del estadio: {self.id}
-------------------------------------
 Estadio: {self.nombre}
+------------------------------------
 Ciudad de ubicación: {self.ciudad}
 Capacidad actual: {self.capacidad}
 ____________________________________
 ''')
+
+    
