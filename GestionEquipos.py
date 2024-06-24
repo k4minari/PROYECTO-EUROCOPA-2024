@@ -2,6 +2,8 @@ from Equipo import Equipo
 from Estadio import Estadio
 from Partido import Partido
 
+# Clase para el modulo que opera el gestionamiento de equipos/partidos/estadios
+
 class GestionEquipos:
     def __init__(self, data_equipo, data_estadio, data_partido):
         self.data_equipo = data_equipo
@@ -58,7 +60,40 @@ class GestionEquipos:
             
     def mostrar_partidos(self):
         for parti in self.partidos:
-            print(parti.show())     
+            print(parti.show())
+            
+    # FILTROS DE BUSQUEDA 
+    
+    def filtro_por_pais(self):
+        print(f'''
+----------------------------
+SELECCIONE EL PAIS DESEADO:
+----------------------------
+
+1. Alemania     2. Escocia
+3. Hungria      4. Suiza
+5. España       6. Croacia
+7. Italia       8. Albania
+9. Eslovenia    10. Dinamarca
+11. Serbia      12. Inglaterra
+13. Polonia     14. Países Bajos
+15. Austria     16. Francia
+17. Rumania     18. Ucrania
+19. Belgica     20. Eslovaquia
+21. Turquia     22. Georgia
+23. Portugal    24. República Checa
+''')
+        
+        seleccion = input('Ingrese el número asociado a su selección: ')
+        while not seleccion.isnumeric() or int(seleccion) not in range(1,25):
+            print('Error')
+            seleccion = input('Ingrese el número asociado a su selección: ')
+        
+        if seleccion == '1':
+            for parti in self.partidos:
+                pass
+                # print(parti.show("Germany"))
+            
                        
     def menu(self):
         self.registro_datos()
@@ -88,7 +123,40 @@ class GestionEquipos:
 ----------------------
 ''')
                 self.mostrar_estadios()
+            
             elif seleccion == '3':
+               
+               self.sub_menu_partidos()
+                
+                
+    def sub_menu_partidos(self):
+        self.registro_datos()
+
+        print(f'''
+----------------------
+------ PARTIDOS ------
+----------------------
+''')
+        while True:
+            print('''
+1. Busqueda por país
+2. Busqueda por estadio
+3. Busqueda por fecha
+4. Mostrar TODOS los partidos
+5. Volver 
+''')
+            seleccion = input('Ingrese el número asociado a su selección: ')
+            while not seleccion.isnumeric() or int(seleccion) not in range(1,6):
+                print('Error')
+                seleccion = input('Ingrese el número asociado a su selección: ')
+                
+            if seleccion == '1':
+                print(f'''
+BUSQUEDA POR EQUIPO
+--------------------------''')
+                self.filtro_por_pais()
+            
+            elif seleccion == '4':
                 print(f'''
 ----------------------
 ------ PARTIDOS ------
@@ -96,3 +164,5 @@ class GestionEquipos:
 ''')
                 self.mostrar_partidos()
                 
+            elif seleccion == '5':
+                self.menu()
