@@ -64,6 +64,10 @@ class GestionEquipos:
             
     # FILTROS DE BUSQUEDA 
     
+    def filtro_pais(self):
+        pais_filtrado = [pais for pais in self.partidos if pais["equipo_local"] == self or pais["equipo_visitante"] == self]
+        print(pais_filtrado)
+    
     def filtro_por_pais(self):
         print(f'''
 ----------------------------
@@ -90,9 +94,8 @@ SELECCIONE EL PAIS DESEADO:
             seleccion = input('Ingrese el número asociado a su selección: ')
         
         if seleccion == '1':
-            for parti in self.partidos:
-                pass
-                # print(parti.show("Germany"))
+            pass 
+
             
                        
     def menu(self):
