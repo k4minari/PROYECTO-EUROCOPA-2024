@@ -36,12 +36,30 @@ class GestionEquipos:
         for p in self.data_partido:
             id = p["id"]
             numero = p["number"]
-            equipo_local = p["home"]["name"]
-            equipo_visitante = p["away"]["name"]
+
+            # Referenciar objeto de tipo Equipo
+            equipo_local_id = p["home"]["id"]
+            for equipo in self.equipos:
+                if equipo_local_id == equipo.id:
+                    equipo_local = equipo.nombre
+
+            # Referenciar objeto de tipo Equipo
+            equipo_visitante_id = p["away"]["id"]
+            for equipo in self.equipos:
+                if equipo_visitante_id == equipo.id:
+                    equipo_visitante = equipo.nombre
+
             fecha = p["date"]
             grupo = p["group"]
+
+            # Referenciar objeto de tipo Estadio
             id_estadio = p["stadium_id"]
-            nuevo_partido = Partido(id, numero, equipo_local, equipo_visitante, fecha, grupo, id_estadio)
+            for estadio in self.estadios:
+                if estadio.id == id_estadio:
+                    estadioGuardar = estadio.nombre
+
+            estadio = None
+            nuevo_partido = Partido(id, numero, equipo_local, equipo_visitante, fecha, grupo, estadioGuardar)
             self.partidos.append(nuevo_partido)
             
                 

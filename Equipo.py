@@ -1,8 +1,3 @@
-import requests
-
-equipos = requests.get("https://raw.githubusercontent.com/Algoritmos-y-Programacion/api-proyecto/main/teams.json").json()
-
-info_equipos = ""
 
 class Equipo:
 # Constructor
