@@ -10,7 +10,7 @@ class Equipo:
         self.grupo = grupo
         
     def show(self):
-        print(f'''
+        return(f'''
 ID: {self.id}
 ----------------------------
 Equipo: {self.nombre}

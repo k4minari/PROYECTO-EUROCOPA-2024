@@ -7,7 +7,7 @@ class Estadio:
         self.restaurates = restaurantes
         
     def show(self):
-        print(f'''
+        return(f'''
 Estadio: {self.nombre}
 ------------------------------------
 Ciudad de ubicación: {self.ciudad}
