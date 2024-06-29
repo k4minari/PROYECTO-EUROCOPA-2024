@@ -286,7 +286,7 @@ SELECCIONE EL ESTADIO DESEADO:
             nombre = 'Red Bull Arena'
             buscar_partido_estadio(self, nombre)
             
-        elif seleccion == '10':
+        else:
             nombre = 'Merkur Spiel-Arena'
             buscar_partido_estadio(self, nombre)
             
@@ -295,7 +295,7 @@ SELECCIONE EL ESTADIO DESEADO:
         def buscar_partido_fecha(self, fecha):
             resultado = []
             for dia in self.partidos:
-                if fecha in dia.estadio:
+                if fecha in dia.fecha:
                     resultado.append(dia)
             
             print("\n")
@@ -376,7 +376,7 @@ SELECCIONE LA FECHA DESEADA:
             fecha = '2024-06-25'
             buscar_partido_fecha(self, fecha)
             
-        elif seleccion == '13':
+        else:
             fecha = '2024-06-26'
             buscar_partido_fecha(self, fecha)
 
@@ -445,13 +445,14 @@ BUSQUEDA POR EQUIPO
 --------------------------
 ''')
                 self.filtro_por_pais()
+                
             elif seleccion == '2':
                 print(f'''
 --------------------------
 BUSQUEDA POR ESTADIO
 --------------------------
 ''')
-                # colocare funcion de estadios
+                self.filtro_por_estadio()
                 
             elif seleccion == '3':
                 print(f'''
@@ -459,7 +460,7 @@ BUSQUEDA POR ESTADIO
 BUSQUEDA POR FECHA
 --------------------------
 ''')
-                # colocar funcion de fecha
+                self.filtro_por_fecha()
             
             elif seleccion == '4':
                 print(f'''
