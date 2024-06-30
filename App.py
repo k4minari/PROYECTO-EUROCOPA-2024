@@ -2,6 +2,7 @@ from Equipo import Equipo
 from Estadio import Estadio
 from Partido import Partido
 from Cliente import Cliente
+from Factura import Factura
 
 # Clase para el modulo que opera el gestionamiento de equipos/partidos/estadios
 
@@ -586,19 +587,21 @@ SECCIÓN GENERAL Nº {seccion}
             
         # MODIFICACION DE PRECIO
         
-        if descuento == True:
-            precio -= float(precio * (50 / 100))  
+        impuesto = 16
+        
+        #if descuento == True:
+            #precio -= float(precio * (50 / 100))  
             # IVA
-            precio += float(precio * (16 / 100))
+            #precio += float(precio * (16 / 100))
             
-        else:
-            precio += float(precio * (16 / 100))
+        #else:
+            #precio += float(precio * (16 / 100))
             
     
         cliente = Cliente(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento)
+        factura = Factura(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento, impuesto)
         self.data_cliente.append(cliente)
-        print('--PROBANDO--')
-        cliente.show()
+        factura.mostrar_factura()
 
 #/////////////////////////////////////////////////////////////////////////////////////////////////////
 #/////////////////////////////////// Menu PRINCIPAL ////////////////////////////////////////////
