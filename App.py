@@ -1,17 +1,32 @@
 from Equipo import Equipo
 from Estadio import Estadio
 from Partido import Partido
+from Cliente import Cliente
 
 # Clase para el modulo que opera el gestionamiento de equipos/partidos/estadios
 
-class GestionEquipos:
-    def __init__(self, data_equipo, data_estadio, data_partido):
+class App:
+    def __init__(self, data_equipo, data_estadio, data_partido, data_cliente):
         self.data_equipo = data_equipo
         self.data_estadio = data_estadio
         self.data_partido = data_partido
+        self.data_cliente = data_cliente
         self.equipos = []
         self.estadios = []
         self.partidos = []
+        self.clientes = []
+        
+    def registro_cliente(self):
+        for n in self.data_cliente:
+            nombre = n[0]
+            cedula = n[1]
+            edad = n[2]
+            partido_compra = n[3]
+            tipo_entrada = n[4]
+            mayor_edad = n[5]
+            precio = n[6]
+            descuento = n[7]
+            self.clientes.append(Cliente(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento))
         
     def registro_equipos(self):
         for e in self.data_equipo:
@@ -381,8 +396,46 @@ SELECCIONE LA FECHA DESEADA:
             buscar_partido_fecha(self, fecha)
 
             
-                       
     def menu(self):
+        self.registro_datos()
+
+        print(f'''
+---------------------------------
+-- BIENVENIDO/A A LA EURO 2024 --
+---------------------------------''')
+        while True:
+            print('''
+1. Ver equipos, estadios y partidos
+2. Comprar entradas
+3. PARTIDOS
+''')
+            seleccion = input('Ingrese el número asociado a su selección: ')
+            while not seleccion.isnumeric() or int(seleccion) not in range(1,6):
+                print('Error')
+                seleccion = input('Ingrese el número asociado a su selección: ')
+
+            if seleccion == '1':
+                print(f'''
+---------------------
+------ GESTION ------
+------ EQUIPOS ------
+---------------------
+''')
+                self.menu_gestion_equipo()
+                
+            elif seleccion == '2':
+                print(f'''
+----------------------
+------ ESTADIOS ------
+----------------------
+''')
+                self.mostrar_estadios()
+            
+            elif seleccion == '3':
+               
+               self.sub_menu_partidos()
+                       
+    def menu_gestion_equipo(self):
         self.registro_datos()
 
         print(f'''
