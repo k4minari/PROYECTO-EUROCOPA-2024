@@ -1,17 +1,19 @@
 class Cliente:
-    def __init__(self, nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad):
+    def __init__(self, nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento):
         self.nombre = nombre
         self.cedula = cedula
         self.edad = edad
         self.partido_compra = partido_compra
         self.tipo_entrada = tipo_entrada
         self.mayor_edad = mayor_edad
+        self.precio = precio
+        self.descuento = descuento
         
     def show(self):
         print(f'''
 Nombre: {self.nombre}
 Cedula: {self.cedula}
-Edad: {self.edad}
+Edad: {self.edad} ({self.siMayorDeEdad()})
 Partido: {self.partido_compra}
 Sección: {self.siVip()}''')
         
@@ -24,9 +26,26 @@ Sección: {self.siVip()}''')
     
     def siMayorDeEdad(self):
         if self.mayor_edad:
-            return True
+            return '(Mayor de edad)'
         else:
-            return False
+            return '(Menor de edad)'
     
     def siVampiro(self):
-        pass
+        if self.descuento:
+            return 'Usted obtiene un descuento del 50%'  # funcion dentro de siVIP
+        else:
+            return 'Descuentos o cupones no aplicados'
+        
+    def mostrar_factura(self):
+        print(f'''
+--------------------------------
+----------- FACTURA ------------
+--------------------------------
+    COMPROBANTE DE COMPRA
+________________________________
+
+Nombre: {self.nombre}
+Cedula: {self.cedula}
+Edad: {self.edad} ({self.siMayorDeEdad()})
+Partido: {self.partido_compra}
+Sección: {self.siVip()}''')
