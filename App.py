@@ -82,6 +82,7 @@ class App:
         self.registro_equipos()
         self.registro_estadios()
         self.registro_partidos()
+        self.registro_cliente()
         
     def mostrar_equipos(self):
         for equi in self.equipos:
@@ -395,6 +396,213 @@ SELECCIONE LA FECHA DESEADA:
             fecha = '2024-06-26'
             buscar_partido_fecha(self, fecha)
 
+    
+    def registro_cliente(self):
+        print('---COMPRA DE ENTRADAS---')
+    
+        nombre = input("Nombre del comprador: ")
+        
+        cedula = input("Coloque su numero de cedula: ")
+        while not cedula.isnumeric() or len(cedula) != 8:
+            print('Error')
+            cedula = input('Coloque su numero de cedula: ')
+
+        num_digitos = len(cedula)
+
+        if num_digitos % 2 != 0:
+            descuento = False
+
+        mitad_digitos = num_digitos // 2
+        parte1 = int(cedula[:mitad_digitos])
+        parte2 = int(cedula[mitad_digitos:])
+
+        if parte1 * parte2 == cedula:
+            print("\nUsted posee un descuento del 50%\n")
+            descuento = True
+            
+        else:
+            descuento = False
+        
+        edad_user = input("Coloque su edad: ")
+        while not edad_user.isnumeric() or int(edad_user) not in range(1,101):
+            edad_user = input('Error. Ingrese su edad: ')
+        
+        edad = int(edad_user)
+        
+        if edad >= 18:
+            mayor_edad = True
+        else:
+            mayor_edad = False
+            
+            
+        partidos = self.partidos
+
+        for idx, g in enumerate(partidos):
+            print(f'''
+{idx+1}. 
+{g.show()}
+''')
+
+        partido_compra = input('Ingrese el número del partido deseado: ')
+        while not partido_compra.isnumeric() or int(partido_compra) not in range(1, 37):
+            partido_compra = input('Error. Ingrese el número del partido deseado: ')
+        
+    
+        print(f'''
+----- ELECCIÓN DE ENTRADA -----
+    1.          /  2.
+                /
+        VIP     /    GENERAL
+                /
+        75$     /      35$
+                /
+                
+" la entrada VIP incluye acceso a "
+    los restaurantes del estadio  
+''')
+        seleccion = input('Ingrese el número asociado a su selección: ')
+        while not seleccion.isnumeric() or int(seleccion) not in range(1,3):
+            print('Error')
+            seleccion = input('Ingrese el número asociado a su selección: ')
+        
+        if seleccion == '1':
+            tipo_entrada = True
+            precio = 75
+            for partido in self.partidos:
+                for elemento in partido_compra[1]:
+                    if elemento["estadio"] == partido["estadio"]:
+# Defino las filas y columnas del mapa de asientos
+
+                        filas = 9
+                        columnas = 20
+
+# Creo una lista vacía para almacenar el mapa de asientos
+
+                        asientos = []
+
+# Creo el mapa de asientos con números para representar los asientos
+
+                        for fila in range(filas):
+                            asientos.append([])
+                            for col in range(columnas):
+                                numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                                asientos[fila].append(numero_asientos)
+
+# Imprimo el mapa de asientos
+
+                        print(f'''
+------ MAPA DE ASIENTOS ------
+''')
+                        cantidad_balcones = 0
+                        seccion = 1
+                        while cantidad_balcones <= 5:
+                            print(f'''
+SECCIÓN VIP Nº {seccion}
+''')
+                            for fila in asientos:
+                                print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
+                            print("\n")
+                            cantidad_balcones += 1
+                            seccion += 1
+
+# Indico qué asientos están ocupados
+
+                        occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]"]
+
+# Actualizo el mapa de asientos para indicar los asientos ocupados
+
+                        for fila in range(filas):
+                            for col in range(columnas):
+                                numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                                if numero_asientos in occupied_seats:
+                                    asientos[fila][col] = "[XX]"  # Asiento ocupado
+                                else:
+                                    asientos[fila][col] = numero_asientos  # Asiento vacío
+
+# Imprimo el mapa de asientos actualizado
+
+                        print("\nMapa de asientos actualizado:")
+                        for fila in asientos:
+                            print(" ".join(fila))
+                    break
+            
+            else:
+                tipo_entrada = False
+                precio = 75
+                for partido in self.partidos:
+                    if partido_compra[0] == '1':
+                        pass
+# Defino las filas y columnas del mapa de asientos
+
+                        filas = 9
+                        columnas = 20
+
+# Creo una lista vacía para almacenar el mapa de asientos
+
+                        asientos = []
+
+# Creo el mapa de asientos con números para representar los asientos
+
+                        for fila in range(filas):
+                            asientos.append([])
+                            for col in range(columnas):
+                                numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                                asientos[fila].append(numero_asientos)
+
+# Imprimo el mapa de asientos
+
+                        print("------ MAPA DE ASIENTOS ------:")
+                        cantidad_balcones = 0
+                        seccion = 1
+                        while cantidad_balcones <= 5:
+                            print(f'''
+SECCIÓN GENERAL Nº {seccion}
+''')
+                            for fila in asientos:
+                                print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
+                            print("\n")
+                            cantidad_balcones += 1
+                            seccion += 1
+
+# Indico qué asientos están ocupados
+
+                        occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]"]
+
+# Actualizo el mapa de asientos para indicar los asientos ocupados
+
+                        for fila in range(filas):
+                            for col in range(columnas):
+                                numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                                if numero_asientos in occupied_seats:
+                                    asientos[fila][col] = "[XX]"  # Asiento ocupado
+                                else:
+                                    asientos[fila][col] = numero_asientos  # Asiento vacío
+
+# Imprimo el mapa de asientos actualizado
+
+                        print("\nMapa de asientos actualizado:")
+                        for fila in asientos:
+                            print(" ".join(fila))
+            
+        # MODIFICACION DE PRECIO
+        
+        if descuento == True:
+            precio -= float(precio * (50 / 100))  
+            # IVA
+            precio += float(precio * (16 / 100))
+            
+        else:
+            precio += float(precio * (16 / 100))
+            
+    
+        cliente = Cliente(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento)
+        self.data_cliente.append(cliente)
+        print('--PROBANDO--')
+        cliente.show()
+
+#/////////////////////////////////////////////////////////////////////////////////////////////////////
+#/////////////////////////////////// Menu PRINCIPAL ////////////////////////////////////////////
+#/////////////////////////////////////////////////////////////////////////////////////////////////////    
             
     def menu(self):
         self.registro_datos()
@@ -407,10 +615,9 @@ SELECCIONE LA FECHA DESEADA:
             print('''
 1. Ver equipos, estadios y partidos
 2. Comprar entradas
-3. PARTIDOS
 ''')
             seleccion = input('Ingrese el número asociado a su selección: ')
-            while not seleccion.isnumeric() or int(seleccion) not in range(1,6):
+            while not seleccion.isnumeric() or int(seleccion) not in range(1,3):
                 print('Error')
                 seleccion = input('Ingrese el número asociado a su selección: ')
 
@@ -425,16 +632,18 @@ SELECCIONE LA FECHA DESEADA:
                 
             elif seleccion == '2':
                 print(f'''
-----------------------
------- ESTADIOS ------
-----------------------
+-------------------------------
+------ INDIQUE SUS DATOS ------
+-------------------------------
 ''')
-                self.mostrar_estadios()
-            
-            elif seleccion == '3':
-               
-               self.sub_menu_partidos()
-                       
+                self.registro_cliente(self)
+                
+
+#/////////////////////////////////////////////////////////////////////////////////////////////////////
+#/////////////////////////////////// Menu gestion de equipos ////////////////////////////////////////////
+#/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                      
     def menu_gestion_equipo(self):
         self.registro_datos()
 
@@ -446,9 +655,10 @@ SELECCIONE LA FECHA DESEADA:
 1. Ver Equipos
 2. Ver estadios
 3. PARTIDOS
+4. Volver <--
 ''')
             seleccion = input('Ingrese el número asociado a su selección: ')
-            while not seleccion.isnumeric() or int(seleccion) not in range(1,6):
+            while not seleccion.isnumeric() or int(seleccion) not in range(1,5):
                 print('Error')
                 seleccion = input('Ingrese el número asociado a su selección: ')
 
@@ -469,8 +679,16 @@ SELECCIONE LA FECHA DESEADA:
             elif seleccion == '3':
                
                self.sub_menu_partidos()
+            
+            elif seleccion == '4':
+                self.menu()
                 
-                
+
+#/////////////////////////////////////////////////////////////////////////////////////////////////////
+#/////////////////////////////////// SUB-Menu PARTIDOS ////////////////////////////////////////////
+#/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+               
     def sub_menu_partidos(self):
         self.registro_datos()
         while True:
@@ -484,7 +702,7 @@ SELECCIONE LA FECHA DESEADA:
 2. Busqueda por estadio
 3. Busqueda por fecha
 4. Mostrar TODOS los partidos
-5. Volver 
+5. Volver <--
 ''')
             seleccion = input('Ingrese el número asociado a su selección: ')
             while not seleccion.isnumeric() or int(seleccion) not in range(1,6):
@@ -524,4 +742,4 @@ BUSQUEDA POR FECHA
                 self.mostrar_partidos()
                 
             elif seleccion == '5':
-                self.menu()
+                self.menu_gestion_equipo()
