@@ -1,9 +1,10 @@
+import json
+
 from Equipo import Equipo
 from Estadio import Estadio
 from Partido import Partido
 from Cliente import Cliente
 from Factura import Factura
-
 
 from Restaurant import Restaurant
 from ProductoRestaurante import ProductoRestaurante
@@ -20,9 +21,10 @@ class App:
         self.clientes = []
         self.restaurantes = []
         self.productos = []
+        self.boletos = []
         
     def registro_cliente(self):
-        for n in self.data_cliente:
+        for n in self.clientes:
             nombre = n[0]
             cedula = n[1]
             edad = n[2]
@@ -496,7 +498,7 @@ SELECCIONE LA FECHA DESEADA:
             seleccion = input('Ingrese el número asociado a su selección: ')
         
         if seleccion == '1':
-            tipo_entrada = True
+            tipo_entrada = 1
             precio = 75
             
 # Defino las filas y columnas del mapa de asientos
@@ -568,7 +570,7 @@ SECCIÓN VIP Nº {seccion}
 
         
         else:
-            tipo_entrada = False
+            tipo_entrada = 2
             precio = 35
             
 # Defino las filas y columnas del mapa de asientos
@@ -600,8 +602,9 @@ SECCIÓN VIP Nº {seccion}
 SECCIÓN GENERAL Nº {seccion}
 ''')
                 for fila in asientos:
-                    print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
-                print("\n")
+                    print(" ".join(fila))    # Logre imprimir las columnas y asientos, pero la ocupacion de estos tan solo quedo en "simulacion"
+                print("\n")                  # un detalle importante es que debi crear una variable que fuera equivalente al numero de "capacidad" dependiendo del estadio, de esa manera hubiera podido imprimir un mapa de asientos mas exacto
+                                             # De haber tomado en cuenta la el atributo cedula como comprobante de asiento ocupado, hubiera podido colocar un input para que el usuario seleccionara fila y columna
                 cantidad_balcones += 1
                 seccion += 1
                 
@@ -645,6 +648,16 @@ SECCIÓN GENERAL Nº {seccion}
         factura = Factura(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento, impuesto, cedula_descuento)
         self.clientes.append(cliente)
         factura.mostrar_factura()
+        
+        shopping = input("Desea comprar la entrada? \n1. si\n2. no \n>")
+        while not shopping.isnumeric() or not int(shopping) in range(1,3):
+            shopping = input("Desea comprar la entrada? \n1. si\n2. no \n>")
+        
+        if shopping == "1":
+            print("Gracias por su compra")
+
+        else:
+            print("Hasta luego")
 
     def gestion_restaurantes(self):
         print(f'''
@@ -727,7 +740,161 @@ Que tipo de alimento desea buscar
         
         if not find:
             print("No hay resultados en este rango")
+ 
+    def gestion_ventas(self):
+        
+        print(f'''
+----------------------------
+SELECCIONE EL ESTADIO DESEADO:
+----------------------------
+
+1. Estadio Olímpico de Berlín
+2. Allianz Arena
+3. Signal Iduna Park
+4. MHPArena
+5. Veltins-Arena
+6. Volksparkstadion
+7. Deutsche Bank Park
+8. Estadio Rhein Energie
+9. Red Bull Arena
+10. Merkur Spiel-Arena
+''')
+        
+        seleccion = input('Ingrese el número asociado a su selección: ')
+        while not seleccion.isnumeric() or int(seleccion) not in range(1,11):
+            print('Error')
+            seleccion = input('Ingrese el número asociado a su selección: ')
+
+        if seleccion == '1':
+            estadio = self.estadios['Estadio Olímpico de Berlín']
             
+        elif seleccion == '2':
+            estadio = self.estadios['Allianz Arena']
+            
+        elif seleccion == '3':
+            estadio = self.estadios['Signal Iduna Park']
+            
+        elif seleccion == '4':
+            estadio = self.estadios['MHPArena']
+            
+        elif seleccion == '5':
+            estadio = self.estadios['Veltins-Arena']
+            
+        elif seleccion == '6':
+            estadio = self.estadios['Volksparkstadion']
+            
+        elif seleccion == '7':
+            estadio = self.estadios['Deutsche Bank Park']
+            
+        elif seleccion == '8':
+            estadio = self.estadios['Estadio Rhein Energie']
+            
+        elif seleccion == '9':
+            estadio = self.estadios['Red Bull Arena']
+            
+        else:
+            estadio = self.estadios['Merkur Spiel-Arena']
+        
+        restaurants = estadio.restaurants
+
+        for index, restaurant in enumerate(restaurants):
+            print(f"        ----------{index+1}----------")
+            print(restaurant.show())
+                
+        opcion = input("Ingrese el numero del restaurante que desea escoger: ")
+        while not opcion.isnumeric() or not int(opcion) in range(1, len(restaurants)+1):
+            opcion = input("Ingrese el numero del restaurante que desea escoger: ")
+                
+                #Consigue la lista de productos y te la muestra para ser seleccionada
+        restaurant = restaurants[int(opcion)-1]
+        products = restaurant.products
+
+        for index, product in enumerate(products):
+            print(f"        ----------{index+1}----------")
+            product.show()
+                
+        opcion = input("Ingrese el numero del producto que desea comprar: ")
+        while (not opcion.isnumeric() or not int(opcion) in range(1, len(products)+1)) or (products[len(products)-1].adicional == "alcoholic"):
+            opcion = input("Ingrese el numero del producto que desea comprar, recuerda que si eres menor no puede comprar alcohol: ")
+                
+        product = products[int(opcion)]
+
+        cantidad = input("Ingresa la cantidad de productos que desea comprar")
+        while not cantidad.isnumeric():
+            cantidad = input("Ingresa la cantidad de productos que desea comprar")
+                
+
+        subtotal = float(product.precio)* float(cantidad)
+        descuento = 0
+        
+        IVA = subtotal*0.16
+        total = subtotal - descuento + IVA
+
+        #FACTURA
+        print("-------Resumen-------")
+        print("---------------------------")
+        print(f"-Producto: {product.name}")
+        print(f"-Cantidad: {cantidad}")
+        print(f"-Subtotal: {subtotal}")
+        print(f"-descuento {descuento}")
+        print(f"-IVA: {IVA}")
+        print(f"-total: {total}")
+
+    
+    #Te verifica si tu cedula es un numero perfecto
+    def perfecto(self, numero):
+        suma_divisores = 0
+        for i in range(1, numero):
+            if numero % i == 0:
+                suma_divisores += i
+        return suma_divisores == numero
+   
+    def estadisticas(self):
+        
+        print(f'''
+Elija las estadisticas que desee ver:
+________________________________________
+
+1. promedio de gasto de un cliente VIP
+2. tabla con la asistencia a los partidos
+3. partido con mayor asistencia
+4. el partido con mayor boletos vendidos
+5. Top 3 más vendidos en el restaurante
+6. Top 3 de clientes (clientes que más compraron boletos)
+''')
+        opcion = input('Ingrese el número asociado a su selección: ')
+        while not opcion.isnumeric() or int(opcion) not in range(1,7):
+            print('Error')
+            opcion = input('Ingrese el número asociado a su selección: ')
+
+        if opcion == '1':
+            print("promedio de gasto de un cliente VIP en un partido")
+
+            balance = 0
+            aux = 0
+            for client in self.clientes:
+                if client.tipo_entrada == 1:
+                    balance += client.balance
+                    aux += 1
+            if balance == 0 and aux == 0:
+                print("No hay datos")
+            else:
+                print(f"El promedio de gasto de un cliente VIP es de: {balance/aux}$")
+        elif opcion == '2':
+            pass # ESTA OPCION DEPENDE DE ELEMENTOS QUE NO SUPE EMPLEAR
+
+        elif opcion == '3':
+            pass # ESTA OPCION DEPENDE DE ELEMENTOS QUE NO SUPE EMPLEAR
+
+        elif opcion == '4':
+            pass # ESTA OPCION DEPENDE DE ELEMENTOS QUE NO SUPE EMPLEAR
+            
+        elif opcion == '5':
+            pass
+
+        elif opcion == '6':
+            pass
+         
 #/////////////////////////////////////////////////////////////////////////////////////////////////////
 #/////////////////////////////////// Menu PRINCIPAL ////////////////////////////////////////////
 #/////////////////////////////////////////////////////////////////////////////////////////////////////    
@@ -748,9 +915,11 @@ Que tipo de alimento desea buscar
 1. Ver equipos, estadios y partidos
 2. Comprar entradas
 3. Gestion de restaurantes
+4. Ventas restaurantes
+5. Estadisticas
 ''')
             seleccion = input('Ingrese el número asociado a su selección: ')
-            while not seleccion.isnumeric() or int(seleccion) not in range(1,4):
+            while not seleccion.isnumeric() or int(seleccion) not in range(1,6):
                 print('Error')
                 seleccion = input('Ingrese el número asociado a su selección: ')
 
@@ -778,6 +947,22 @@ Que tipo de alimento desea buscar
 ----------------------------------
 ''')
                 self.gestion_restaurantes()
+            
+            elif seleccion == '4':
+                print(f'''
+----------------------------------
+------- RESTAURANTES VENTA -------
+----------------------------------
+''')
+                self.gestion_ventas()
+                
+            elif seleccion == '5':
+                print(f'''
+----------------------------------
+--------- ESTADISTICAS -----------
+----------------------------------
+''')
+                self.estadisticas()
                 
 
 #/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -883,3 +1068,5 @@ BUSQUEDA POR FECHA
                 
             elif seleccion == '5':
                 self.menu_gestion_equipo()
+                
+    

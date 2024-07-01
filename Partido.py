@@ -8,6 +8,9 @@ class Partido:
         self.fecha = fecha
         self.grupo = grupo
         self.estadio = estadio
+        self.entrada_vip = []
+        self.entrada_general = []
+        self.asistencia = 0
         
     def show(self):
         return(f'''

@@ -24,7 +24,7 @@ class Factura(Cliente):
         return self.calcular_subtotal() + self.calcular_impuesto() - self.calcular_descuento()
     
     def siVip(self):
-        if self.tipo_entrada:
+        if self.tipo_entrada == 1:
             return 'VIP'
         else:
             return 'GENERAL'

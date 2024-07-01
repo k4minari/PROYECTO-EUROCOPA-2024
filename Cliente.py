@@ -19,7 +19,7 @@ Sección: {self.siVip()}''')
         
     
     def siVip(self):
-        if self.tipo_entrada:
+        if self.tipo_entrada == 1:
             return 'VIP'
         else:
             return 'GENERAL'
