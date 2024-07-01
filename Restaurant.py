@@ -6,6 +6,7 @@ class Restaurant:
         self.productos = productos
 
     def show(self):
-        return f"""
-            name: {self.nombre}
-            products: {self.productos}"""
+        return f'''
+Nombre: {self.nombre}
+Productos: {self.productos}
+'''

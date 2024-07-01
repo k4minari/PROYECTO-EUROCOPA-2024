@@ -10,11 +10,10 @@ from ProductoRestaurante import ProductoRestaurante
 # Clase para el modulo que opera el gestionamiento de equipos/partidos/estadios
 
 class App:
-    def __init__(self, data_equipo, data_estadio, data_partido, data_cliente):
+    def __init__(self, data_equipo, data_estadio, data_partido):
         self.data_equipo = data_equipo
         self.data_estadio = data_estadio
         self.data_partido = data_partido
-        self.data_cliente = data_cliente
         self.equipos = []
         self.estadios = []
         self.partidos = []
@@ -644,7 +643,7 @@ SECCIÓN GENERAL Nº {seccion}
     
         cliente = Cliente(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento)
         factura = Factura(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento, impuesto, cedula_descuento)
-        self.data_cliente.append(cliente)
+        self.clientes.append(cliente)
         factura.mostrar_factura()
 
     def gestion_restaurantes(self):

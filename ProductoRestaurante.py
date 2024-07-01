@@ -8,10 +8,10 @@ class ProductoRestaurante:
         self.sold = 0
 
     def show(self):
-        return f"""
-            name = {self.nombre}
-            quantity = {self.cantidad}
-            price = {self.precio}
-            adicional = {self.adicional}
-            stock = {self.stock}
-            """
+        return f'''
+Nombre: {self.nombre}
+Vendido: {self.cantidad}
+Precio = {self.precio}
+Tipo de producto: {self.adicional}
+stock: {self.stock}
+'''
