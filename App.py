@@ -496,133 +496,146 @@ SELECCIONE LA FECHA DESEADA:
             print('Error')
             seleccion = input('Ingrese el número asociado a su selección: ')
         
-        if seleccion in range(1, 37):
+        if seleccion == '1':
             tipo_entrada = True
             precio = 75
-            if partido_compra[0] == '1':
+            
 # Defino las filas y columnas del mapa de asientos
 
-                filas = 9
-                columnas = 20
+            filas = 9
+            columnas = 20
 
 # Creo una lista vacía para almacenar el mapa de asientos
 
-                asientos = []
+            asientos = []
                 
 # Creo el mapa de asientos con números para representar los asientos
 
-                for fila in range(filas):
-                            asientos.append([])
-                            for col in range(columnas):
-                                numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
-                                asientos[fila].append(numero_asientos)
+            for fila in range(filas):
+                        asientos.append([])
+                        for col in range(columnas):
+                            numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                            asientos[fila].append(numero_asientos)
 
 # Imprimo el mapa de asientos
 
-                print(f'''
+            print(f'''
 ------ MAPA DE ASIENTOS ------
 ''')
-                cantidad_balcones = 0
-                seccion = 1
-                while cantidad_balcones <= 5:
-                    print(f'''
+            cantidad_balcones = 0
+            seccion = 1
+            while cantidad_balcones <= 5:
+                print(f'''
 SECCIÓN VIP Nº {seccion}
 ''')
-                    for fila in asientos:
-                        print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
-                    print("\n")
-                    cantidad_balcones += 1
-                    seccion += 1
+                for fila in asientos:
+                    print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
+                print("\n")
+                cantidad_balcones += 1
+                seccion += 1
                 
                 
-                occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]" , "[2A]", "[3D]", "[7F]", "[9D]", "[7A]", "[8A]", "[5C]", "[6C]", "[1F]", "[3F]", "[4F]", "[5F]", "[6F]", "[7F]", "[6D]", "[4B]", "[6B]", "[7B]", "[7E]", "[8E]", "[1E]", "[9E]"]
+            occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]" , "[2A]", "[3D]", "[7F]", "[9D]", "[7A]", "[8A]", "[5C]", "[6C]", "[1F]", "[3F]", "[4F]", "[5F]", "[6F]", "[7F]", "[6D]", "[4B]", "[6B]", "[7B]", "[7E]", "[8E]", "[1E]", "[9E]"]
 
 # Actualizo el mapa de asientos para indicar los asientos ocupados
 
-                for fila in range(filas):
-                    for col in range(columnas):
-                        numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
-                        if numero_asientos in occupied_seats:
-                            asientos[fila][col] = "[XX]"  # Asiento ocupado
-                        else:
-                            asientos[fila][col] = numero_asientos  # Asiento vacío
+            for fila in range(filas):
+                for col in range(columnas):
+                    numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                    if numero_asientos in occupied_seats:
+                        asientos[fila][col] = "[XX]"  # Asiento ocupado
+                    else:
+                        asientos[fila][col] = numero_asientos  # Asiento vacío
 
 # Imprimo el mapa de asientos actualizado
 
-                print(f'''
+            print(f'''
 ------ MAPA DE ASIENTOS ------
           ACTUALIZADO
 ''')
-                cantidad_balcones = 0
-                seccion = 1
-                while cantidad_balcones <= 5:
-                    print(f'''
+            cantidad_balcones = 0
+            seccion = 1
+            while cantidad_balcones <= 5:
+                print(f'''
 SECCIÓN VIP Nº {seccion}
 ''')
-                    for fila in asientos:
-                        print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
-                    print("\n")
-                    cantidad_balcones += 1
-                    seccion += 1
+                for fila in asientos:
+                    print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
+                print("\n")
+                cantidad_balcones += 1
+                seccion += 1
+            
+            
 
         
         else:
             tipo_entrada = False
             precio = 35
-            if partido_compra[0] == '1':
+            
 # Defino las filas y columnas del mapa de asientos
 
-                filas = 9
-                columnas = 20
+            filas = 9
+            columnas = 20
 
 # Creo una lista vacía para almacenar el mapa de asientos
 
-                asientos = []
-
+            asientos = []
+                
 # Creo el mapa de asientos con números para representar los asientos
 
-                for fila in range(filas):
-                    asientos.append([])
-                    for col in range(columnas):
-                        numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
-                        asientos[fila].append(numero_asientos)
+            for fila in range(filas):
+                        asientos.append([])
+                        for col in range(columnas):
+                            numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                            asientos[fila].append(numero_asientos)
 
 # Imprimo el mapa de asientos
 
-                print(f'''
+            print(f'''
 ------ MAPA DE ASIENTOS ------
 ''')
-                cantidad_balcones = 0
-                seccion = 1
-                while cantidad_balcones <= 5:
-                    print(f'''
+            cantidad_balcones = 0
+            seccion = 1
+            while cantidad_balcones <= 5:
+                print(f'''
 SECCIÓN GENERAL Nº {seccion}
 ''')
-                    for fila in asientos:
-                        print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
-                    print("\n")
-                    cantidad_balcones += 1
-                    seccion += 1
-
-# Indico qué asientos están ocupados
-
-                occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]"]
+                for fila in asientos:
+                    print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
+                print("\n")
+                cantidad_balcones += 1
+                seccion += 1
+                
+                
+            occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]" , "[2A]", "[3D]", "[7F]", "[9D]", "[7A]", "[8A]", "[5C]", "[6C]", "[1F]", "[3F]", "[4F]", "[5F]", "[6F]", "[7F]", "[6D]", "[4B]", "[6B]", "[7B]", "[7E]", "[8E]", "[1E]", "[9E]"]
 
 # Actualizo el mapa de asientos para indicar los asientos ocupados
 
-                for fila in range(filas):
-                    for col in range(columnas):
-                        numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
-                        if numero_asientos in occupied_seats:
-                            asientos[fila][col] = "[XX]"  # Asiento ocupado
-                        else:
-                            asientos[fila][col] = numero_asientos  # Asiento vacío
+            for fila in range(filas):
+                for col in range(columnas):
+                    numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                    if numero_asientos in occupied_seats:
+                        asientos[fila][col] = "[XX]"  # Asiento ocupado
+                    else:
+                        asientos[fila][col] = numero_asientos  # Asiento vacío
 
 # Imprimo el mapa de asientos actualizado
 
-                print("\nMapa de asientos actualizado:")
+            print(f'''
+------ MAPA DE ASIENTOS ------
+          ACTUALIZADO
+''')
+            cantidad_balcones = 0
+            seccion = 1
+            while cantidad_balcones <= 5:
+                print(f'''
+SECCIÓN GENERAL Nº {seccion}
+''')
                 for fila in asientos:
-                            print(" ".join(fila))
+                    print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
+                print("\n")
+                cantidad_balcones += 1
+                seccion += 1
             
         # MODIFICACION DE PRECIO
         
@@ -634,6 +647,7 @@ SECCIÓN GENERAL Nº {seccion}
         self.data_cliente.append(cliente)
         factura.mostrar_factura()
 
+    
 #/////////////////////////////////////////////////////////////////////////////////////////////////////
 #/////////////////////////////////// Menu PRINCIPAL ////////////////////////////////////////////
 #/////////////////////////////////////////////////////////////////////////////////////////////////////    
@@ -650,6 +664,7 @@ SECCIÓN GENERAL Nº {seccion}
             print('''
 1. Ver equipos, estadios y partidos
 2. Comprar entradas
+3. Gestion de restaurantes
 ''')
             seleccion = input('Ingrese el número asociado a su selección: ')
             while not seleccion.isnumeric() or int(seleccion) not in range(1,3):
@@ -672,6 +687,14 @@ SECCIÓN GENERAL Nº {seccion}
 -------------------------------
 ''')
                 self.registro_comprador()
+                
+            elif seleccion == '3':
+                print(f'''
+----------------------------------
+------ RESTAURANTES GESTION ------
+----------------------------------
+''')
+                self.gestion_restaurantes()
                 
 
 #/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -32,7 +32,7 @@ Sección: {self.siVip()}''')
     
     def siVampiro(self):
         if self.descuento:
-            return 'Usted obtiene un descuento del 50%'  # funcion dentro de siVIP
+            return 'Usted obtiene un descuento del 50%'  
         else:
             return 'Descuentos o cupones no aplicados'
         
@@ -48,4 +48,7 @@ Nombre: {self.nombre}
 Cedula: {self.cedula}
 Edad: {self.edad} ({self.siMayorDeEdad()})
 Partido: {self.partido_compra}
-Sección: {self.siVip()}''')
+Sección: {self.siVip()}
+________________________________
+
+Sub''')
