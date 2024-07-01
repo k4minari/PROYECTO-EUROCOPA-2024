@@ -1,21 +1,24 @@
 from Cliente import Cliente
 
 class Factura(Cliente):
-    def __init__(self, nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento, impuesto):
+    def __init__(self, nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento, impuesto, cedula_descuento):
         super().__init__(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento)
         self.impuesto = impuesto
+        self.cedula_descuento = cedula_descuento
         
     def calcular_subtotal(self):
-        subtotal = 0
-        for precio in self.precio:
-            subtotal += precio['precio'] * precio['cantidad']
-        return subtotal
+        if self.tipo_entrada:
+            subtotal = 75
+            return subtotal
+        else:
+            subtotal = 35
+            return subtotal
 
     def calcular_impuesto(self):
         return self.calcular_subtotal() * (self.impuesto / 100)
 
     def calcular_descuento(self):
-        return self.calcular_subtotal() * (self.descuento / 100)
+        return self.calcular_subtotal() * (self.cedula_descuento / 100)
 
     def calcular_total(self):
         return self.calcular_subtotal() + self.calcular_impuesto() - self.calcular_descuento()
@@ -56,7 +59,7 @@ ________________________________''')
         print("----------------")
         print(f"Subtotal: {self.calcular_subtotal():.2f}")
         print(f"Impuesto ({self.impuesto}%): {self.calcular_impuesto():.2f}")
-        print(f"Descuento ({self.descuento}%): -{self.calcular_descuento():.2f}")
+        print(f"Descuento ({self.cedula_descuento}%): -{self.calcular_descuento():.2f}")
         print("----------------")
         print(f"Total: {self.calcular_total():.2f}")
         print("----------------")

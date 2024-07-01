@@ -4,6 +4,9 @@ from Partido import Partido
 from Cliente import Cliente
 from Factura import Factura
 
+
+from Restaurant import Restaurant
+from ProductoRestaurante import ProductoRestaurante
 # Clase para el modulo que opera el gestionamiento de equipos/partidos/estadios
 
 class App:
@@ -16,6 +19,8 @@ class App:
         self.estadios = []
         self.partidos = []
         self.clientes = []
+        self.restaurantes = []
+        self.productos = []
         
     def registro_cliente(self):
         for n in self.data_cliente:
@@ -46,6 +51,27 @@ class App:
             capacidad = o["capacity"]
             restaurantes = o["restaurants"]
             nuevo_estadio = Estadio(id, nombre, ciudad, capacidad, restaurantes)
+            
+            
+            restaurants = []
+            for restaurant in o['restaurants']:
+                nuevo_restaurante = Restaurant(restaurant['name'], restaurant['products'])
+                
+                products = []
+                for product in restaurant['products']:
+                    nuevo_producto = ProductoRestaurante(product['name'], product['quantity'], product['price'], product['adicional'], product['stock'])
+                    products.append(nuevo_producto)
+                    self.productos.append(nuevo_producto)
+                #Guardamos lista de productos dentro del restaurantes
+                nuevo_estadio.restaurants = restaurants
+
+
+
+                restaurants.append(nuevo_restaurante)
+                self.restaurantes.append(nuevo_restaurante)
+            #Guardamos lista de restaurantes dentro del estadio
+            nuevo_estadio.restaurants = restaurants
+            
             self.estadios.append(nuevo_estadio)
             
     def registro_partidos(self):
@@ -398,7 +424,8 @@ SELECCIONE LA FECHA DESEADA:
             buscar_partido_fecha(self, fecha)
 
     
-    def registro_cliente(self):
+    def registro_comprador(self):
+        
         print('---COMPRA DE ENTRADAS---')
     
         nombre = input("Nombre del comprador: ")
@@ -412,6 +439,7 @@ SELECCIONE LA FECHA DESEADA:
 
         if num_digitos % 2 != 0:
             descuento = False
+            cedula_descuento = 0
 
         mitad_digitos = num_digitos // 2
         parte1 = int(cedula[:mitad_digitos])
@@ -420,9 +448,11 @@ SELECCIONE LA FECHA DESEADA:
         if parte1 * parte2 == cedula:
             print("\nUsted posee un descuento del 50%\n")
             descuento = True
+            cedula_descuento = 50
             
         else:
             descuento = False
+            cedula_descuento = 0
         
         edad_user = input("Coloque su edad: ")
         while not edad_user.isnumeric() or int(edad_user) not in range(1,101):
@@ -466,24 +496,22 @@ SELECCIONE LA FECHA DESEADA:
             print('Error')
             seleccion = input('Ingrese el número asociado a su selección: ')
         
-        if seleccion == '1':
+        if seleccion in range(1, 37):
             tipo_entrada = True
             precio = 75
-            for partido in self.partidos:
-                for elemento in partido_compra[1]:
-                    if elemento["estadio"] == partido["estadio"]:
+            if partido_compra[0] == '1':
 # Defino las filas y columnas del mapa de asientos
 
-                        filas = 9
-                        columnas = 20
+                filas = 9
+                columnas = 20
 
 # Creo una lista vacía para almacenar el mapa de asientos
 
-                        asientos = []
-
+                asientos = []
+                
 # Creo el mapa de asientos con números para representar los asientos
 
-                        for fila in range(filas):
+                for fila in range(filas):
                             asientos.append([])
                             for col in range(columnas):
                                 numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
@@ -491,115 +519,118 @@ SELECCIONE LA FECHA DESEADA:
 
 # Imprimo el mapa de asientos
 
-                        print(f'''
+                print(f'''
 ------ MAPA DE ASIENTOS ------
 ''')
-                        cantidad_balcones = 0
-                        seccion = 1
-                        while cantidad_balcones <= 5:
-                            print(f'''
+                cantidad_balcones = 0
+                seccion = 1
+                while cantidad_balcones <= 5:
+                    print(f'''
 SECCIÓN VIP Nº {seccion}
 ''')
-                            for fila in asientos:
-                                print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
-                            print("\n")
-                            cantidad_balcones += 1
-                            seccion += 1
-
-# Indico qué asientos están ocupados
-
-                        occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]"]
+                    for fila in asientos:
+                        print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
+                    print("\n")
+                    cantidad_balcones += 1
+                    seccion += 1
+                
+                
+                occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]" , "[2A]", "[3D]", "[7F]", "[9D]", "[7A]", "[8A]", "[5C]", "[6C]", "[1F]", "[3F]", "[4F]", "[5F]", "[6F]", "[7F]", "[6D]", "[4B]", "[6B]", "[7B]", "[7E]", "[8E]", "[1E]", "[9E]"]
 
 # Actualizo el mapa de asientos para indicar los asientos ocupados
 
-                        for fila in range(filas):
-                            for col in range(columnas):
-                                numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
-                                if numero_asientos in occupied_seats:
-                                    asientos[fila][col] = "[XX]"  # Asiento ocupado
-                                else:
-                                    asientos[fila][col] = numero_asientos  # Asiento vacío
+                for fila in range(filas):
+                    for col in range(columnas):
+                        numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                        if numero_asientos in occupied_seats:
+                            asientos[fila][col] = "[XX]"  # Asiento ocupado
+                        else:
+                            asientos[fila][col] = numero_asientos  # Asiento vacío
 
 # Imprimo el mapa de asientos actualizado
 
-                        print("\nMapa de asientos actualizado:")
-                        for fila in asientos:
-                            print(" ".join(fila))
-                    break
-            
-            else:
-                tipo_entrada = False
-                precio = 75
-                for partido in self.partidos:
-                    if partido_compra[0] == '1':
-                        pass
+                print(f'''
+------ MAPA DE ASIENTOS ------
+          ACTUALIZADO
+''')
+                cantidad_balcones = 0
+                seccion = 1
+                while cantidad_balcones <= 5:
+                    print(f'''
+SECCIÓN VIP Nº {seccion}
+''')
+                    for fila in asientos:
+                        print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
+                    print("\n")
+                    cantidad_balcones += 1
+                    seccion += 1
+
+        
+        else:
+            tipo_entrada = False
+            precio = 35
+            if partido_compra[0] == '1':
 # Defino las filas y columnas del mapa de asientos
 
-                        filas = 9
-                        columnas = 20
+                filas = 9
+                columnas = 20
 
 # Creo una lista vacía para almacenar el mapa de asientos
 
-                        asientos = []
+                asientos = []
 
 # Creo el mapa de asientos con números para representar los asientos
 
-                        for fila in range(filas):
-                            asientos.append([])
-                            for col in range(columnas):
-                                numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
-                                asientos[fila].append(numero_asientos)
+                for fila in range(filas):
+                    asientos.append([])
+                    for col in range(columnas):
+                        numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                        asientos[fila].append(numero_asientos)
 
 # Imprimo el mapa de asientos
 
-                        print("------ MAPA DE ASIENTOS ------:")
-                        cantidad_balcones = 0
-                        seccion = 1
-                        while cantidad_balcones <= 5:
-                            print(f'''
+                print(f'''
+------ MAPA DE ASIENTOS ------
+''')
+                cantidad_balcones = 0
+                seccion = 1
+                while cantidad_balcones <= 5:
+                    print(f'''
 SECCIÓN GENERAL Nº {seccion}
 ''')
-                            for fila in asientos:
-                                print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
-                            print("\n")
-                            cantidad_balcones += 1
-                            seccion += 1
+                    for fila in asientos:
+                        print(" ".join(fila))    # PENDIENTE CON MOSTRAR LOS ASIENTOS OCUPADOS
+                    print("\n")
+                    cantidad_balcones += 1
+                    seccion += 1
 
 # Indico qué asientos están ocupados
 
-                        occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]"]
+                occupied_seats = ["[1A]", "[2C]", "[3E]", "[5B]", "[7D]", "[9F]"]
 
 # Actualizo el mapa de asientos para indicar los asientos ocupados
 
-                        for fila in range(filas):
-                            for col in range(columnas):
-                                numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
-                                if numero_asientos in occupied_seats:
-                                    asientos[fila][col] = "[XX]"  # Asiento ocupado
-                                else:
-                                    asientos[fila][col] = numero_asientos  # Asiento vacío
+                for fila in range(filas):
+                    for col in range(columnas):
+                        numero_asientos = f"[{fila+1}{chr(ord('A')+col)}]"
+                        if numero_asientos in occupied_seats:
+                            asientos[fila][col] = "[XX]"  # Asiento ocupado
+                        else:
+                            asientos[fila][col] = numero_asientos  # Asiento vacío
 
 # Imprimo el mapa de asientos actualizado
 
-                        print("\nMapa de asientos actualizado:")
-                        for fila in asientos:
+                print("\nMapa de asientos actualizado:")
+                for fila in asientos:
                             print(" ".join(fila))
             
         # MODIFICACION DE PRECIO
         
         impuesto = 16
-        
-        #if descuento == True:
-            #precio -= float(precio * (50 / 100))  
-            # IVA
-            #precio += float(precio * (16 / 100))
-            
-        #else:
-            #precio += float(precio * (16 / 100))
             
     
         cliente = Cliente(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento)
-        factura = Factura(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento, impuesto)
+        factura = Factura(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento, impuesto, cedula_descuento)
         self.data_cliente.append(cliente)
         factura.mostrar_factura()
 
@@ -608,6 +639,7 @@ SECCIÓN GENERAL Nº {seccion}
 #/////////////////////////////////////////////////////////////////////////////////////////////////////    
             
     def menu(self):
+        
         self.registro_datos()
 
         print(f'''
@@ -639,7 +671,7 @@ SECCIÓN GENERAL Nº {seccion}
 ------ INDIQUE SUS DATOS ------
 -------------------------------
 ''')
-                self.registro_cliente(self)
+                self.registro_comprador()
                 
 
 #/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -648,7 +680,6 @@ SECCIÓN GENERAL Nº {seccion}
 
                       
     def menu_gestion_equipo(self):
-        self.registro_datos()
 
         print(f'''
 --BIENVENIDO/A A LA EURO 2024--
@@ -693,7 +724,7 @@ SECCIÓN GENERAL Nº {seccion}
 
                
     def sub_menu_partidos(self):
-        self.registro_datos()
+        
         while True:
             print(f'''
 ----------------------

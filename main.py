@@ -7,7 +7,7 @@ data_partido = requests.get("https://raw.githubusercontent.com/Algoritmos-y-Prog
 data_cliente = []
 
 def main():
-    gestion_equipos = App(data_equipo, data_estadio, data_partido, data_cliente)
-    gestion_equipos.menu()
+    app = App(data_equipo, data_estadio, data_partido, data_cliente)
+    app.menu()
 
 main()
