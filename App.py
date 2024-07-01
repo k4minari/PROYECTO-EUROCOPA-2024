@@ -647,7 +647,88 @@ SECCIÓN GENERAL Nº {seccion}
         self.data_cliente.append(cliente)
         factura.mostrar_factura()
 
+    def gestion_restaurantes(self):
+        print(f'''
+---------------------------------
+FILTRO DE BUSQUEDA DE PRODUCTOS
+---------------------------------
+1. Nombre del producto
+2. Tipo del producto
+3. precio del producto
+''')
+
+        opcion = input('Ingrese el número asociado a su selección: ')
+        while not opcion.isnumeric() or int(opcion) not in range(1,4):
+            print('Error')
+            opcion = input('Ingrese el número asociado a su selección: ')
+        
+        if opcion == '1':
+            self.buscar_producto_nombre()
+        elif opcion == '2':
+            self.buscar_producto_tipo()
+        elif opcion == '3':
+            self.buscar_precio_producto()
     
+    def buscar_producto_nombre(self):
+        busqueda =input("Ingresa el nombre del producto que desea buscar: ").lower()
+        find = False
+        for product in self.productos:
+            if busqueda in product.nombre.lower():
+                find = True
+                print(product.show())
+        
+        if not find:
+            print("No se encontraron resultados")
+    
+    def buscar_producto_tipo(self):
+        print(f'''
+---------------------------------
+Que tipo de alimento desea buscar
+---------------------------------
+1. De paquete
+2. De plato
+3. Con alcohol
+4. Sin alcohol
+''')
+        busqueda = input('Ingrese el número asociado a su selección: ')
+        while not busqueda.isnumeric() or int(busqueda) not in range(1,5):
+            print('Error')
+            busqueda = input('Ingrese el número asociado a su selección: ')
+        
+        find = True
+        for product in self.productos:
+            if busqueda == "1" and product.adicional == "package":
+                print(product.show())
+            elif busqueda == "2" and product.adicional == "plate":
+                print(product.show())
+            elif busqueda == "3" and product.adicional == "alcoholic":
+                print(product.show())
+            elif busqueda == "4" and product.adicional == "non-alcoholic":
+                print(product.show())
+            else:
+                find = False
+
+        if find:
+            print("Dato invalido")
+    
+    def buscar_precio_producto(self):
+        precio_minimo =input("Ingresa el numero minimo del precio: ")
+        while not precio_minimo.isnumeric():
+            precio_minimo =input("Ingresa el numero minimo del precio: ")
+        
+        precio_maximo =input("Ingresa el numero maximo del pecio: ")
+        while not precio_maximo.isnumeric() and float(precio_maximo) < float(precio_minimo):
+            precio_maximo =input("Ingresa el numero maximo del precio: ")
+        
+        find = False
+        for product in self.productos:
+            if float(precio_minimo) < float(product.precio) < float(precio_maximo):
+                find = True
+                print(product.show())
+        
+        if not find:
+            print("No hay resultados en este rango")
+            
 #/////////////////////////////////////////////////////////////////////////////////////////////////////
 #/////////////////////////////////// Menu PRINCIPAL ////////////////////////////////////////////
 #/////////////////////////////////////////////////////////////////////////////////////////////////////    
@@ -656,18 +737,21 @@ SECCIÓN GENERAL Nº {seccion}
         
         self.registro_datos()
 
-        print(f'''
+        
+        while True:
+            
+            print(f'''
 ---------------------------------
 -- BIENVENIDO/A A LA EURO 2024 --
 ---------------------------------''')
-        while True:
+            
             print('''
 1. Ver equipos, estadios y partidos
 2. Comprar entradas
 3. Gestion de restaurantes
 ''')
             seleccion = input('Ingrese el número asociado a su selección: ')
-            while not seleccion.isnumeric() or int(seleccion) not in range(1,3):
+            while not seleccion.isnumeric() or int(seleccion) not in range(1,4):
                 print('Error')
                 seleccion = input('Ingrese el número asociado a su selección: ')
 
@@ -704,10 +788,10 @@ SECCIÓN GENERAL Nº {seccion}
                       
     def menu_gestion_equipo(self):
 
-        print(f'''
+        while True:
+            print(f'''
 --BIENVENIDO/A A LA EURO 2024--
 ''')
-        while True:
             print('''
 1. Ver Equipos
 2. Ver estadios
