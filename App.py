@@ -21,7 +21,6 @@ class App:
         self.clientes = []
         self.restaurantes = []
         self.productos = []
-        self.boletos = []
         
     def registro_cliente(self):
         for n in self.clientes:
@@ -127,7 +126,7 @@ class App:
     # FILTROS DE BUSQUEDA 
     
     def filtro_por_pais(self):
-        
+        # funcion que permite realizar el filtro de busqueda
         def buscar_partido_nombre(self, nombre):
             resultado = []
             for partido in self.partidos:
@@ -158,10 +157,12 @@ SELECCIONE EL PAIS DESEADO:
 23. Portugal    24. República Checa
 ''')
         
+        # Comprobacion de respuesta 
         seleccion = input('Ingrese el número asociado a su selección: ')
         while not seleccion.isnumeric() or int(seleccion) not in range(1,25):
             print('Error')
             seleccion = input('Ingrese el número asociado a su selección: ')
+        # Dependiendo de la opcion se colocara el parametro que permitira buscar el equipo deseado
         
         if seleccion == '1':
             nombre = 'Germany'
@@ -260,7 +261,7 @@ SELECCIONE EL PAIS DESEADO:
             buscar_partido_nombre(self, nombre)
             
     def filtro_por_estadio(self):
-        
+        # funcion que permite realizar el filtro de busqueda
         def buscar_partido_estadio(self, nombre):
             resultado = []
             for estadio in self.partidos:
@@ -288,7 +289,7 @@ SELECCIONE EL ESTADIO DESEADO:
 9. Red Bull Arena
 10. Merkur Spiel-Arena
 ''')
-        
+        # Comprobacion de respuesta 
         seleccion = input('Ingrese el número asociado a su selección: ')
         while not seleccion.isnumeric() or int(seleccion) not in range(1,11):
             print('Error')
@@ -335,7 +336,7 @@ SELECCIONE EL ESTADIO DESEADO:
             buscar_partido_estadio(self, nombre)
             
     def filtro_por_fecha(self):
-        
+        # funcion que permite realizar el filtro de busqueda
         def buscar_partido_fecha(self, fecha):
             resultado = []
             for dia in self.partidos:
@@ -438,6 +439,8 @@ SELECCIONE LA FECHA DESEADA:
 
         num_digitos = len(cedula)
 
+        # Este apartado se encarga de identifar si la cedula ingresada es un vampiro
+        
         if num_digitos % 2 != 0:
             descuento = False
             cedula_descuento = 0
@@ -474,7 +477,6 @@ SELECCIONE LA FECHA DESEADA:
 {idx+1}. 
 {g.show()}
 ''')
-
         partido_compra = input('Ingrese el número del partido deseado: ')
         while not partido_compra.isnumeric() or int(partido_compra) not in range(1, 37):
             partido_compra = input('Error. Ingrese el número del partido deseado: ')
@@ -643,15 +645,26 @@ SECCIÓN GENERAL Nº {seccion}
         
         impuesto = 16
             
-    
+        # Registramos los datos 
+        
         cliente = Cliente(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento)
         factura = Factura(nombre, cedula, edad, partido_compra, tipo_entrada, mayor_edad, precio, descuento, impuesto, cedula_descuento)
         self.clientes.append(cliente)
+        
+        # mostramos factura
+        
         factura.mostrar_factura()
         
-        shopping = input("Desea comprar la entrada? \n1. si\n2. no \n>")
+        # se le pregunta al cliente si deseea realizar la compra
+        print(f'''
+Realizar compra?
+
+1. SI
+2. NO
+''')
+        shopping = input("coloque el numero de su eleccion: ")
         while not shopping.isnumeric() or not int(shopping) in range(1,3):
-            shopping = input("Desea comprar la entrada? \n1. si\n2. no \n>")
+            shopping = input("coloque el numero de sueleccion: ")
         
         if shopping == "1":
             print("Gracias por su compra")
@@ -659,7 +672,7 @@ SECCIÓN GENERAL Nº {seccion}
         else:
             print("Hasta luego")
 
-    def gestion_restaurantes(self):
+    def gestion_restaurantes(self):  # le damos al cliente las opciones de filtros de busqueda
         print(f'''
 ---------------------------------
 FILTRO DE BUSQUEDA DE PRODUCTOS
@@ -674,6 +687,8 @@ FILTRO DE BUSQUEDA DE PRODUCTOS
             print('Error')
             opcion = input('Ingrese el número asociado a su selección: ')
         
+        # dependiendo de la eleccion se activara su respectiva funcion de filtro
+        
         if opcion == '1':
             self.buscar_producto_nombre()
         elif opcion == '2':
@@ -683,13 +698,13 @@ FILTRO DE BUSQUEDA DE PRODUCTOS
     
     def buscar_producto_nombre(self):
         busqueda =input("Ingresa el nombre del producto que desea buscar: ").lower()
-        find = False
+        encontrado = False
         for product in self.productos:
             if busqueda in product.nombre.lower():
-                find = True
+                encontrado = True
                 print(product.show())
         
-        if not find:
+        if not encontrado:
             print("No se encontraron resultados")
     
     def buscar_producto_tipo(self):
@@ -707,7 +722,7 @@ Que tipo de alimento desea buscar
             print('Error')
             busqueda = input('Ingrese el número asociado a su selección: ')
         
-        find = True
+        encontrado = True
         for product in self.productos:
             if busqueda == "1" and product.adicional == "package":
                 print(product.show())
@@ -718,12 +733,13 @@ Que tipo de alimento desea buscar
             elif busqueda == "4" and product.adicional == "non-alcoholic":
                 print(product.show())
             else:
-                find = False
+                encontrado = False
 
-        if find:
+        if encontrado:
             print("Dato invalido")
     
     def buscar_precio_producto(self):
+        
         precio_minimo =input("Ingresa el numero minimo del precio: ")
         while not precio_minimo.isnumeric():
             precio_minimo =input("Ingresa el numero minimo del precio: ")
@@ -759,6 +775,7 @@ SELECCIONE EL ESTADIO DESEADO:
 9. Red Bull Arena
 10. Merkur Spiel-Arena
 ''')
+        # Aca se tenia que hacer un comprobante de que el cliente fuera VIP, pero al no poder lograrlo intente tener acceso libre para probarlo
         
         seleccion = input('Ingrese el número asociado a su selección: ')
         while not seleccion.isnumeric() or int(seleccion) not in range(1,11):
@@ -766,39 +783,39 @@ SELECCIONE EL ESTADIO DESEADO:
             seleccion = input('Ingrese el número asociado a su selección: ')
 
         if seleccion == '1':
-            estadio = self.estadios['Estadio Olímpico de Berlín']
+            pass
             
         elif seleccion == '2':
-            estadio = self.estadios['Allianz Arena']
+            pass
             
         elif seleccion == '3':
-            estadio = self.estadios['Signal Iduna Park']
+            pass
             
         elif seleccion == '4':
-            estadio = self.estadios['MHPArena']
+            pass
             
         elif seleccion == '5':
-            estadio = self.estadios['Veltins-Arena']
+            pass
             
         elif seleccion == '6':
-            estadio = self.estadios['Volksparkstadion']
+            pass
             
         elif seleccion == '7':
-            estadio = self.estadios['Deutsche Bank Park']
+            pass
             
         elif seleccion == '8':
-            estadio = self.estadios['Estadio Rhein Energie']
+            pass
             
         elif seleccion == '9':
-            estadio = self.estadios['Red Bull Arena']
+            pass
             
         else:
-            estadio = self.estadios['Merkur Spiel-Arena']
+            pass
         
-        restaurants = estadio.restaurants
+        restaurants = self.restaurantes
 
         for index, restaurant in enumerate(restaurants):
-            print(f"        ----------{index+1}----------")
+            print(f"        ----------{index+1}.")
             print(restaurant.show())
                 
         opcion = input("Ingrese el numero del restaurante que desea escoger: ")
@@ -810,9 +827,10 @@ SELECCIONE EL ESTADIO DESEADO:
         products = restaurant.products
 
         for index, product in enumerate(products):
-            print(f"        ----------{index+1}----------")
+            print(f"        ----------{index+1}.")
             product.show()
-                
+        
+        # Comprobacion de respuesta        
         opcion = input("Ingrese el numero del producto que desea comprar: ")
         while (not opcion.isnumeric() or not int(opcion) in range(1, len(products)+1)) or (products[len(products)-1].adicional == "alcoholic"):
             opcion = input("Ingrese el numero del producto que desea comprar, recuerda que si eres menor no puede comprar alcohol: ")
@@ -827,21 +845,25 @@ SELECCIONE EL ESTADIO DESEADO:
         subtotal = float(product.precio)* float(cantidad)
         descuento = 0
         
-        IVA = subtotal*0.16
-        total = subtotal - descuento + IVA
+        iva = subtotal*0.16
+        total = subtotal - descuento + iva
 
         #FACTURA
-        print("-------Resumen-------")
-        print("---------------------------")
-        print(f"-Producto: {product.name}")
-        print(f"-Cantidad: {cantidad}")
-        print(f"-Subtotal: {subtotal}")
-        print(f"-descuento {descuento}")
-        print(f"-IVA: {IVA}")
-        print(f"-total: {total}")
+        print(f'''
+----------------------
+FACTURA / RESUMEN 
+----------------------
+-Producto: {product.name}
+-Cantidad: {cantidad}
+-Subtotal: {subtotal}
+-descuento: {descuento}
+-IVA: {iva}
+-total: {total}
+''')
 
     
-    #Te verifica si tu cedula es un numero perfecto
+    #Te verificacion de descuento
+    
     def perfecto(self, numero):
         suma_divisores = 0
         for i in range(1, numero):
